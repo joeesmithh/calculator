@@ -2,4 +2,63 @@
     box-sizing: border-box;
     margin: 0;
     padding: 0;
+    font-size: large;
+}
+
+body {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#display,
+button,
+#container {
+    border-style: solid;
+    border-color: gray;
+    border-width: 1px;
+    border-radius: 10px;
+    box-shadow:
+        inset 0px -2px 1px rgba(0, 0, 0, 0.2),
+        inset 0px 2px 1px rgba(255, 255, 255, 0.5);
+}
+
+#keypad,
+#numbers,
+.row,
+#operators {
+    /* flex: 1; */
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+#display {
+    height: 50px;
+    padding: 10px;
+    margin-bottom: 10px;
+    align-content: center;
+}
+
+#container {
+    padding: 10px;
+    box-shadow: 0px 5px 5px rgba(0, 0, 0, 0.2);
+}
+
+#keypad {}
+
+#numbers {
+    flex-direction: column;
+}
+
+.row {}
+
+#operators {
+    flex-direction: column;
+}
+
+button {
+    width: 50px;
+    aspect-ratio: 1 / 1;
 }
