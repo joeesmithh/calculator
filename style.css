@@ -14,21 +14,27 @@ body {
 
 #display,
 button,
-#container {
+#calculator {
     border-style: solid;
     border-color: gray;
-    border-width: 1px;
-    border-radius: 10px;
+    border-width: 2px;
+    border-radius: 8px;
     box-shadow:
         inset 0px -2px 1px rgba(0, 0, 0, 0.2),
         inset 0px 2px 1px rgba(255, 255, 255, 0.5);
 }
 
+button:hover {
+    background-color: lab(90.59% 0 -0.01);
+}
+
+button:active {
+    background-color: #f5f5f5;
+}
+
 #keypad,
 #numbers,
-.row,
-#operators {
-    /* flex: 1; */
+.row {
     display: flex;
     justify-content: space-between;
     gap: 10px;
@@ -41,7 +47,7 @@ button,
     align-content: center;
 }
 
-#container {
+#calculator {
     padding: 10px;
     box-shadow: 0px 5px 5px rgba(0, 0, 0, 0.2);
 }
@@ -54,9 +60,6 @@ button,
 
 .row {}
 
-#operators {
-    flex-direction: column;
-}
 
 button {
     width: 50px;
