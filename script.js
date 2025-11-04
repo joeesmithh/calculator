@@ -1,4 +1,4 @@
-const keypad = document.getElementById("keypad");
+const buttons = document.querySelectorAll("button");
 const display = document.getElementById("display");
 
 let expression = {
@@ -7,83 +7,126 @@ let expression = {
     rhs: null
 }
 
-/** @param {string} s The string to append to the display. */
-function append(s) {
-    display.innerHTML += s;
+function debugExpression() {
+    for (const [key, value] of Object.entries(expression)) {
+        console.log(`Key: ${key}, Value: ${value}`);
+    }
 }
 
-/** Clears the expression and display. */
-function clear() {
+function clearExpression() {
+    Object.keys(expression).forEach((key) => {
+        expression[key] = null;
+    });
+}
 
+function updateDisplay() {
+    display.textContent = "";
+    if (expression.lhs !== null)
+        display.textContent = expression.lhs;
+    if (expression.op !== null)
+        display.textContent += ` ${expression.op} `;
+    if (expression.rhs !== null)
+        display.textContent += expression.rhs;
 }
 
 /** @param {Element} e The element of the input number */
-function makeNum(e) {
-    if (expression.op == null)
-        expression.lhs = expression.lhs == null ?
-            e.innerHTML : expression.lhs + e.innerHTML;
-    else
-        expression.rhs = expression.rhs == null ?
-            e.innerHTML : expression.rhs + e.innerHTML;
+function makeNum(num) {
 
-    append(e.innerHTML)
+    // Append to lhs number if no op, append to rhs number otherwise
+    if (expression.op === null)
+        expression.lhs =
+            expression.lhs === null ? num : expression.lhs + num;
+    else
+        expression.rhs =
+            expression.rhs === null ? num : expression.rhs + num;
+
+    updateDisplay();
 }
 
-/** @param {Element} e The element of the operator to add the the expressions */
-function addOp(e) {
-    if (expression.op == null) {
-        expression.op = e.id;
-        append(e.innerHTML);
-    }
-    else if (expression.rhs != null) {
-        calc();
-        expression.op = e.id;
-        append(e.innerHTML);
-    }
+function addOp(opID) {
+
+    // Return if no rhs number
+    if (expression.lhs === null)
+        return;
+
+    if (expression.op === null)
+        expression.op = opID;
+
+    updateDisplay();
 }
 
 function calc() {
-    if (expression.op == null)
+    if (expression.op === null)
         return;
-    
+
+    let result = 0;
     switch (expression.op) {
-        case "add":     // Add
-            expression.lhs = parseFloat(expression.lhs) + parseFloat(expression.rhs);
+        case "+":     // Add
+            result =
+                parseFloat(expression.lhs) + parseFloat(expression.rhs);
             break;
-        case "sub":     // Subtract
-            expression.lhs = parseFloat(expression.lhs) - parseFloat(expression.rhs);
+        case "-":     // Subtract
+            result =
+                parseFloat(expression.lhs) - parseFloat(expression.rhs);
             break;
-        case "mult":    // Multiply
-            expression.lhs = parseFloat(expression.lhs) * parseFloat(expression.rhs);
+        case "×":    // Multiply
+            result =
+                parseFloat(expression.lhs) * parseFloat(expression.rhs);
             break;
-        case "div":     // Divide
-            expression.lhs = parseFloat(expression.lhs) / parseFloat(expression.rhs);
+        case "÷":     // Divide
+            result =
+                parseFloat(expression.lhs) / parseFloat(expression.rhs);
             break;
         default:
             break;
     }
-    expression.op = null;
-    expression.rhs = null;
-    console.log(expression.lhs);
+
+    clearExpression();
+    makeNum(result);
 }
 
-keypad.addEventListener("click", (e) => {
-    const target = e.target;
+function reset() {
+    clearExpression();
+    updateDisplay();
+}
 
-    if (target instanceof Element) {
+function performAction(actionString) {
+    switch (actionString) {
+        case "=":
+            calc();
+            break;
+        case "C":
+            reset();
+            break;
+        default:
+            break;
+    }
+}
 
-        target.classList.forEach((s) => {
-            switch (s) {
+keypad.addEventListener("click", (event) => {
+    const element = event.target;
+
+    if (element instanceof Element) {
+        let elementText = element.textContent.slice(0, 1); // Strip new line
+        element.classList.forEach((elementClass) => {
+            switch (elementClass) {
                 case "num":
-                    makeNum(target);
+                    makeNum(elementText);
                     break;
                 case "op":
-                    addOp(target);
+                    addOp(elementText);
                     break;
                 case "action":
+                    performAction(elementText);
+                    break;
                 default:
                     break;
             }
         });
     }
 });
+
+/** Clears the expression and display. */
+function clear() {
+
+}
