@@ -56,7 +56,7 @@ function addOp(opID) {
 }
 
 function calc() {
-    if (expression.op === null)
+    if (expression.rhs === null)
         return;
 
     let result = 0;
