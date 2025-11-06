@@ -8,8 +8,7 @@
 }
 
 /* Defauly Spacing */
-body,
-#calculator,
+#calculator-layout,
 #keypad,
 .row {
     display: flex;
@@ -23,12 +22,18 @@ button {
 }
 
 body {
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
+    text-align: center;
+    /* justify-content: center; */
+    /* align-items: center; */
+    align-content: center;
+    /* height: 100vh; */
 }
 
 #calculator {
+    display: inline-block;
+}
+
+#calculator-layout {
     flex-direction: column;
     padding: 10px;
 }
@@ -44,7 +49,6 @@ body {
 
 button {
     aspect-ratio: 1 / 1;
-    /* font-size: large; */
 }
 
 /* Default Styling */
