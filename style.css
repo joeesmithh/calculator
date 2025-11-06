@@ -8,6 +8,25 @@
 }
 
 /* Defauly Spacing */
+#apples {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    margin: 40px 0px;
+}
+
+#apples-left,
+#apples-right {
+    display: inline-block;
+    align-content: center;
+    width: 15rem;
+}
+
+#apples-left img,
+#apples-right img {
+    width: 80px;
+}
+
 #calculator-layout,
 #keypad,
 .row {
@@ -23,10 +42,7 @@ button {
 
 body {
     text-align: center;
-    /* justify-content: center; */
-    /* align-items: center; */
     align-content: center;
-    /* height: 100vh; */
 }
 
 #calculator {
