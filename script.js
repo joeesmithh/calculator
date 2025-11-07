@@ -7,6 +7,23 @@ let expression = {
     rhs: null
 }
 
+/**
+    @param {string} side The side ("left" or "right") to append the apple to.
+    @param {number} count Number of apples to add.
+*/
+function addApples(side, count) {
+    const applesSide = document.getElementById(`apples-${side}`);
+
+    for (let i = 0; i < count; i++) {
+        let apple = document.createElement("img");
+        apple.setAttribute("src", "./images/apple.svg");
+        apple.setAttribute("alt", "apple");
+        applesSide.appendChild(apple);
+    }
+}
+
+addApples("left", 6);
+
 function debugExpression() {
     for (const [key, value] of Object.entries(expression)) {
         console.log(`Key: ${key}, Value: ${value}`);
