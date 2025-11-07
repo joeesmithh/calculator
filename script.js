@@ -51,6 +51,9 @@ function clearExpression() {
     // Clear apples display
     addApples("left", 0);
     addApples("right", 0);
+
+    // Clear apples operator
+    document.getElementById("apples").querySelector("p").textContent = '';
 }
 
 function updateDisplay() {
@@ -61,6 +64,7 @@ function updateDisplay() {
     }
     if (expression.op !== null){
         display.textContent += ` ${expression.op} `;
+        document.getElementById("apples").querySelector("p").textContent = expression.op;
     }
     if (expression.rhs !== null){
         display.textContent += expression.rhs;
