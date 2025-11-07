@@ -23,6 +23,19 @@ function addApples(side, count) {
     }
 }
 
+/** Make a certain number of left-hand-side apples transparent.
+    @param {number} count The number of apples to make transparent, beginning from the end of the list.
+*/
+function makeApplesTransparent(count) {
+    const applesSide = document.getElementById(`apples-left`);
+    let apples = applesSide.childNodes;
+    
+    for (let i = apples.length - 1; i > apples.length - count - 1; i--) {
+        let maxIndex = Math.max(0, i);
+        apples[maxIndex].classList.add("transparent");
+    }
+}
+
 function debugExpression() {
     for (const [key, value] of Object.entries(expression)) {
         console.log(`Key: ${key}, Value: ${value}`);
@@ -52,6 +65,10 @@ function updateDisplay() {
     if (expression.rhs !== null){
         display.textContent += expression.rhs;
         addApples("right", parseInt(expression.rhs));
+
+        if(expression.op === "-"){
+            makeApplesTransparent(expression.rhs);
+        }
     }
 }
 

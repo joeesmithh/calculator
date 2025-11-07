@@ -22,6 +22,10 @@
     width: 400px;
 }
 
+.transparent {
+    opacity: 0.3;
+}
+
 #apples-left img,
 #apples-right img {
     width: 80px;
