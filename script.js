@@ -13,6 +13,7 @@ let expression = {
 */
 function addApples(side, count) {
     const applesSide = document.getElementById(`apples-${side}`);
+    applesSide.innerHTML = "";
 
     for (let i = 0; i < count; i++) {
         let apple = document.createElement("img");
@@ -22,8 +23,6 @@ function addApples(side, count) {
     }
 }
 
-addApples("left", 6);
-
 function debugExpression() {
     for (const [key, value] of Object.entries(expression)) {
         console.log(`Key: ${key}, Value: ${value}`);
@@ -31,19 +30,29 @@ function debugExpression() {
 }
 
 function clearExpression() {
+    // Clear calculator display
     Object.keys(expression).forEach((key) => {
         expression[key] = null;
     });
+
+    // Clear apples display
+    addApples("left", 0);
+    addApples("right", 0);
 }
 
 function updateDisplay() {
     display.textContent = "";
-    if (expression.lhs !== null)
+    if (expression.lhs !== null){
         display.textContent = expression.lhs;
-    if (expression.op !== null)
+        addApples("left", parseInt(expression.lhs));
+    }
+    if (expression.op !== null){
         display.textContent += ` ${expression.op} `;
-    if (expression.rhs !== null)
+    }
+    if (expression.rhs !== null){
         display.textContent += expression.rhs;
+        addApples("right", parseInt(expression.rhs));
+    }
 }
 
 /** @param {Element} e The element of the input number */
@@ -142,8 +151,3 @@ keypad.addEventListener("click", (event) => {
         });
     }
 });
-
-/** Clears the expression and display. */
-function clear() {
-
-}
