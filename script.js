@@ -1,16 +1,16 @@
 const buttons = document.querySelectorAll("button");
 const display = document.getElementById("display");
 
+// The main math expression
 let expression = {
     lhs: null,
     op: null,
     rhs: null
 }
 
-/**
+/** Append apples to display.
     @param {string} side The side ("left" or "right") to append the apple to.
-    @param {number} count Number of apples to add.
-*/
+    @param {number} count Number of apples to add. */
 function addApples(side, count) {
     const applesSide = document.getElementById(`apples-${side}`);
     applesSide.innerHTML = "";
@@ -29,54 +29,49 @@ function addApples(side, count) {
 function makeApplesTransparent(count) {
     const applesSide = document.getElementById(`apples-left`);
     let apples = applesSide.childNodes;
-    
+
     for (let i = apples.length - 1; i > apples.length - count - 1; i--) {
         let maxIndex = Math.max(0, i);
         apples[maxIndex].classList.add("transparent");
     }
 }
 
-function debugExpression() {
-    for (const [key, value] of Object.entries(expression)) {
-        console.log(`Key: ${key}, Value: ${value}`);
-    }
-}
-
+/** Clear the math expression */
 function clearExpression() {
     // Clear calculator display
     Object.keys(expression).forEach((key) => {
         expression[key] = null;
     });
-
-    // Clear apples display
-    addApples("left", 0);
-    addApples("right", 0);
-
-    // Clear apples operator
-    document.getElementById("apples").querySelector("p").textContent = '';
 }
 
+/** Update displays to reflect math expression. */
 function updateDisplay() {
     display.textContent = "";
-    if (expression.lhs !== null){
+    if (expression.lhs !== null) {
+        // Append number and apples to left-hand-side displays
         display.textContent = expression.lhs;
         addApples("left", parseInt(expression.lhs));
     }
-    if (expression.op !== null){
+    if (expression.op !== null) {
+        // Append operator to apple and calculator displays
         display.textContent += ` ${expression.op} `;
-        document.getElementById("apples").querySelector("p").textContent = expression.op;
+        document.getElementById("apples").querySelector("p").textContent
+            = `  ${expression.op}  `;
     }
-    if (expression.rhs !== null){
+    if (expression.rhs !== null) {
+        // Append number and apples to right-hand-side displays
         display.textContent += expression.rhs;
         addApples("right", parseInt(expression.rhs));
 
-        if(expression.op === "-"){
+        // Make left-hand-side apples transparent if subtracting
+        if (expression.op === "-") {
             makeApplesTransparent(expression.rhs);
         }
     }
 }
 
-/** @param {Element} e The element of the input number */
+/** Build either number of the math expression.
+    @param {Element} e The element of the input number */
 function makeNum(num) {
 
     // Append to lhs number if no op, append to rhs number otherwise
@@ -90,18 +85,21 @@ function makeNum(num) {
     updateDisplay();
 }
 
-function addOp(opID) {
+/** Specify operator to add to the math expression.
+    @param {string} operator The operator to add to the expression (+, -, ×, or ÷) */
+function addOp(operator) {
 
     // Return if no rhs number
     if (expression.lhs === null)
         return;
 
     if (expression.op === null)
-        expression.op = opID;
+        expression.op = operator;
 
     updateDisplay();
 }
 
+/** Perform calculation on expression and update display. */
 function calc() {
     if (expression.rhs === null)
         return;
@@ -128,17 +126,30 @@ function calc() {
             break;
     }
 
-    clearExpression();
+    // Clear expression and add result to new expression
+    reset();
     makeNum(result);
 }
 
+/** Clear expression and displays. */
 function reset() {
     clearExpression();
+
+    // Clear apples display
+    addApples("left", 0);
+    addApples("right", 0);
+
+    // Clear apples operator
+    document.getElementById("apples").querySelector("p").textContent = '';
+
     updateDisplay();
 }
 
-function performAction(actionString) {
-    switch (actionString) {
+/** Perform an action on the expression.
+    @param {string} action The action to perform ('=' to calculate, or 'C' to clear)
+ */
+function performAction(action) {
+    switch (action) {
         case "=":
             calc();
             break;
@@ -150,6 +161,7 @@ function performAction(actionString) {
     }
 }
 
+// Add onClick event listener to keypad button elements
 keypad.addEventListener("click", (event) => {
     const element = event.target;
 

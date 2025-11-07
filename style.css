@@ -12,11 +12,12 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 40px;
+    /* gap: 40px; */
     margin: 40px 0px;
 }
 
 #apples p {
+    white-space: pre;
     font-size: 100px;
 }
 
@@ -24,7 +25,7 @@
 #apples-right {
     display: inline-block;
     align-content: center;
-    width: 400px;
+    max-width: 400px;
 }
 
 .transparent {
