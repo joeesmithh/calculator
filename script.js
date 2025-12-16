@@ -1,3 +1,4 @@
+// Document elements
 const buttons = document.querySelectorAll("button");
 const display = document.getElementById("display");
 
@@ -17,7 +18,7 @@ function addApples(side, count) {
 
     for (let i = 0; i < count; i++) {
         let apple = document.createElement("img");
-        apple.setAttribute("src", "./images/apple.svg");
+        apple.setAttribute("src", "./images/20251213_135704.png");
         apple.setAttribute("alt", "apple");
         applesSide.appendChild(apple);
     }
