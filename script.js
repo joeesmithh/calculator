@@ -1,7 +1,3 @@
-// Document elements
-const buttons = document.querySelectorAll("button");
-const display = document.getElementById("display");
-
 // The main math expression
 let expression = {
     lhs: null,
@@ -20,6 +16,7 @@ function addApples(side, count) {
         let apple = document.createElement("img");
         apple.setAttribute("src", "./images/apple.svg");
         apple.setAttribute("alt", "apple");
+        apple.classList.add("apple");
         applesSide.appendChild(apple);
     }
 }
@@ -163,7 +160,7 @@ function performAction(action) {
 }
 
 // Add onClick event listener to keypad button elements
-keypad.addEventListener("click", (event) => {
+$("button").click(function (event) { 
     const element = event.target;
 
     if (element instanceof Element) {
@@ -185,3 +182,6 @@ keypad.addEventListener("click", (event) => {
         });
     }
 });
+
+
+
